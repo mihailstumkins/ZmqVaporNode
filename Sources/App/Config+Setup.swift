@@ -13,6 +13,8 @@ extension Config {
     /// Configure providers
     private func setupProviders() throws {
         try addProvider(FluentProvider.Provider.self)
+        try addProvider(ZmqReplyProvider.self)
+        try addProvider(ZmqRequestProvider.self)
     }
     
     /// Add all models that should have their

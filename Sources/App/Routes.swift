@@ -20,6 +20,15 @@ extension Droplet {
 
         get("description") { req in return req.description }
         
+        get("zmq-request", String.parameter) { req in
+            let message = try req.parameters.next(String.self)
+            try self.zmqRequest?.send(string: message)
+            guard let resp = try self.zmqRequest?.recv() else {
+                throw Abort(.badRequest)
+            }
+            return resp
+        }
+        
         try resource("posts", PostController.self)
     }
 }
